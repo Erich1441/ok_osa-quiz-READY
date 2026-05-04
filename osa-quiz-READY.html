@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Tầm Soát Hội Chứng Ngưng Thở Khi Ngủ (OSA) - Giấc Ngủ Việt</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --primary:#0E7C8C;
+  --primary-mid:#1A9BAD;
+  --primary-light:#E0F5F8;
+  --primary-xlight:#F0FAFB;
+  --green:#16A34A;
+  --green-bg:#DCFCE7;
+  --green-border:#86EFAC;
+  --yellow:#B45309;
+  --yellow-mid:#D97706;
+  --yellow-bg:#FEF3C7;
+  --yellow-border:#FCD34D;
+  --orange:#C2410C;
+  --orange-bg:#FFEDD5;
+  --red:#DC2626;
+  --red-bg:#FEE2E2;
+  --red-border:#FCA5A5;
+  --text:#1E293B;
+  --text-mid:#475569;
+  --text-muted:#94A3B8;
+  --border:#E2E8F0;
+  --border-mid:#CBD5E1;
+  --bg:#F1F5F9;
+  --card:#FFFFFF;
+  --r:14px;
+  --rs:10px;
+}
+
+html,body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+}
+
+.quiz-root{
+  width:100%;
+  max-width:480px;
+  min-height:100vh;
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+}
+
+/* PROGRESS BAR */
+.progress-shell{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#fff;
+  padding:10px 20px 8px;
+  border-bottom:1px solid var(--border);
+  display:none;
+}
+.progress-shell.visible{display:block}
+.progress-meta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:6px;
+}
+.progress-step-text{
+  font-size:11px;
+  font-weight:700;
+  color:var(--primary);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+.progress-pct{
+  font-size:11px;
+  font-weight:600;
+  color:var(--text-muted);
+}
+.progress-track{
+  height:5px;
+  background:var(--border);
+  border-radius:99px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary-mid),#38BDF8);
+  border-radius:99px;
+  width:0%;
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+
+/* SCREENS */
+.screen{
+  flex:1;
+  display:none;
+  flex-direction:column;
+  padding:20px 20px 32px;
+  animation:fadeUp .35s ease both;
+}
+.screen.active{display:flex}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ── START SCREEN ── */
+.start-hero{
+  background:linear-gradient(145deg,#0A6675 0%,#1AACBF 100%);
+  border-radius:var(--r);
+  padding:28px 22px 24px;
+  color:#fff;
+  text-align:center;
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+.start-hero::before{
+  content:'';
+  position:absolute;
+  top:-30px;right:-30px;
+  width:160px;height:160px;
+  background:rgba(255,255,255,.06);
+  border-radius:50%;
+}
+.hero-icon-wrap{
+  width:68px;height:68px;
+  background:rgba(255,255,255,.15);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+}
+.hero-icon-wrap svg{width:36px;height:36px}
+.start-hero h1{
+  font-size:18px;
+  font-weight:900;
+  line-height:1.3;
+  margin-bottom:12px;
+  letter-spacing:-.2px;
+}
+.start-hero p{
+  font-size:13px;
+  line-height:1.65;
+  opacity:.92;
+  font-weight:400;
+}
+
+.trust-row{
+  display:flex;gap:8px;flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.trust-badge{
+  flex:1;min-width:calc(50% - 4px);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--rs);
+  padding:12px 10px;
+  text-align:center;
+  font-size:11px;
+  font-weight:600;
+  color:var(--text-mid);
+  line-height:1.4;
+}
+.trust-badge strong{
+  display:block;
+  font-size:16px;
+  font-weight:800;
+  color:var(--primary);
+  margin-bottom:2px;
+}
+
+/* BUTTONS */
+.btn{
+  display:block;width:100%;
+  padding:15px 20px;
+  border-radius:var(--rs);
+  font-family:'Montserrat',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  border:none;
+  text-align:center;
+  letter-spacing:.3px;
+  transition:opacity .15s,transform .1s;
+  text-decoration:none;
+  line-height:1.2;
+}
+.btn:active{transform:scale(.985);opacity:.9}
+.btn-teal{background:var(--primary);color:#fff}
+.btn-red{background:var(--red);color:#fff}
+.btn-yellow{background:var(--yellow-mid);color:#fff}
+.btn-green{background:var(--green);color:#fff}
+.btn-outline{
+  background:#fff;
+  color:var(--text);
+  border:1.5px solid var(--border-mid);
+  margin-top:10px;
+  font-size:13px;
+}
+
+/* ── QUESTION SCREEN ── */
+.q-label{
+  font-size:11px;font-weight:700;
+  color:var(--primary);
+  text-transform:uppercase;letter-spacing:.8px;
+  margin-bottom:10px;
+}
+.q-text{
+  font-size:17px;font-weight:800;
+  line-height:1.4;color:var(--text);
+  margin-bottom:6px;
+}
+.q-note{
+  font-size:12px;font-weight:500;
+  color:var(--text-muted);
+  line-height:1.55;
+  margin-bottom:20px;
+  background:var(--primary-xlight);
+  border-left:3px solid var(--primary);
+  border-radius:0 var(--rs) var(--rs) 0;
+  padding:8px 12px;
+  display:none;
+}
+.q-note.show{display:block}
+
+.options{
+  display:flex;flex-direction:column;gap:10px;
+  margin-bottom:18px;
+}
+.opt{
+  background:#fff;
+  border:2px solid var(--border);
+  border-radius:var(--rs);
+  padding:14px 14px 14px 12px;
+  cursor:pointer;
+  display:flex;align-items:flex-start;gap:10px;
+  font-family:'Montserrat',sans-serif;
+  font-size:14px;font-weight:500;
+  color:var(--text);line-height:1.45;
+  transition:border-color .15s,background .15s,transform .1s;
+  text-align:left;
+  width:100%;
+}
+.opt:hover{border-color:var(--primary-mid);background:var(--primary-xlight)}
+.opt:active{transform:scale(.985)}
+.opt.selected{
+  border-color:var(--primary);
+  background:var(--primary-light);
+  color:var(--primary);
+}
+.opt-marker{
+  width:22px;height:22px;min-width:22px;
+  border-radius:50%;
+  background:var(--bg);
+  border:1.5px solid var(--border-mid);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+  color:var(--text-muted);
+  transition:background .15s,border-color .15s,color .15s;
+  margin-top:1px;
+}
+.opt.selected .opt-marker{
+  background:var(--primary);
+  border-color:var(--primary);
+  color:#fff;
+}
+
+.back-btn{
+  background:none;border:none;
+  display:flex;align-items:center;gap:6px;
+  font-family:'Montserrat',sans-serif;
+  font-size:13px;font-weight:600;
+  color:var(--text-muted);
+  cursor:pointer;
+  padding:6px 0;
+  transition:color .15s;
+}
+.back-btn:hover{color:var(--text)}
+
+/* ── FORM SCREEN ── */
+.form-hero{
+  background:linear-gradient(135deg,#0A6675,#1AACBF);
+  border-radius:var(--r);
+  padding:20px;color:#fff;
+  text-align:center;margin-bottom:20px;
+}
+.form-hero .fh-icon{
+  font-size:32px;margin-bottom:8px;display:block;
+}
+.form-hero h2{font-size:17px;font-weight:800;margin-bottom:6px}
+.form-hero p{font-size:12px;opacity:.9;line-height:1.6}
+
+.form-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:20px;
+  margin-bottom:16px;
+}
+
+.fld{margin-bottom:14px}
+.fld-lbl{
+  display:block;
+  font-size:11px;font-weight:700;
+  color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:6px;
+}
+.fld input[type=text],
+.fld input[type=tel]{
+  width:100%;
+  border:1.5px solid var(--border);
+  border-radius:var(--rs);
+  padding:13px 14px;
+  font-family:'Montserrat',sans-serif;
+  font-size:15px;font-weight:500;
+  color:var(--text);
+  outline:none;
+  transition:border-color .15s;
+  background:#fff;
+}
+.fld input:focus{border-color:var(--primary)}
+.fld.error input{border-color:var(--red)}
+.err-msg{
+  font-size:11px;font-weight:600;
+  color:var(--red);margin-top:4px;
+  display:none;
+}
+.fld.error .err-msg{display:block}
+
+.check-row{
+  display:flex;align-items:flex-start;gap:10px;
+  background:var(--primary-xlight);
+  border:1.5px solid #A5D8E0;
+  border-radius:var(--rs);
+  padding:12px;
+  cursor:pointer;
+  margin-bottom:16px;
+}
+.check-row input[type=checkbox]{
+  width:18px;height:18px;min-width:18px;
+  accent-color:var(--primary);
+  margin-top:1px;cursor:pointer;
+}
+.check-row label{
+  font-size:13px;font-weight:600;
+  color:#0A5F6B;line-height:1.45;cursor:pointer;
+}
+
+.privacy-note{
+  font-size:11px;color:var(--text-muted);
+  text-align:center;line-height:1.5;
+  margin-top:8px;
+}
+
+/* ── RESULT SCREEN ── */
+.result-banner{
+  border-radius:var(--r);
+  padding:24px 20px;
+  text-align:center;
+  margin-bottom:16px;
+  border:2px solid transparent;
+}
+.result-banner.red{background:var(--red-bg);border-color:var(--red-border)}
+.result-banner.yellow{background:var(--yellow-bg);border-color:var(--yellow-border)}
+.result-banner.green{background:var(--green-bg);border-color:var(--green-border)}
+
+.result-icon{font-size:38px;display:block;margin-bottom:10px}
+.result-title{
+  font-size:15px;font-weight:900;
+  line-height:1.35;margin-bottom:10px;
+}
+.result-title.red{color:#991B1B}
+.result-title.yellow{color:#78350F}
+.result-title.green{color:#14532D}
+
+.score-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  border-radius:99px;padding:5px 14px;
+  font-size:13px;font-weight:700;
+}
+.score-chip.red{background:#FEE2E2;color:#B91C1C}
+.score-chip.yellow{background:#FEF3C7;color:#92400E}
+.score-chip.green{background:#DCFCE7;color:#15803D}
+
+.result-body{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px;
+  margin-bottom:14px;
+  font-size:14px;font-weight:400;
+  line-height:1.7;color:var(--text-mid);
+}
+
+/* GAUGE */
+.gauge-wrap{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px 16px 12px;
+  margin-bottom:14px;
+  text-align:center;
+}
+.gauge-wrap h4{
+  font-size:12px;font-weight:700;
+  color:var(--text);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:14px;
+}
+.gauge-svg-wrap{
+  width:240px;margin:0 auto;
+  display:block;
+}
+.gauge-score-display{
+  font-size:26px;font-weight:900;
+  margin:6px 0 2px;
+}
+.gauge-score-display.red{color:var(--red)}
+.gauge-score-display.yellow{color:var(--yellow-mid)}
+.gauge-score-display.green{color:var(--green)}
+.gauge-label-row{
+  display:flex;justify-content:space-between;
+  font-size:10px;font-weight:700;
+  color:var(--text-muted);
+  padding:0 8px;
+  margin-top:2px;
+}
+.gauge-risk-label{
+  font-size:12px;font-weight:700;
+  margin-top:6px;
+  padding:4px 14px;
+  border-radius:99px;
+  display:inline-block;
+}
+.gauge-risk-label.red{background:var(--red-bg);color:#991B1B}
+.gauge-risk-label.yellow{background:var(--yellow-bg);color:#78350F}
+.gauge-risk-label.green{background:var(--green-bg);color:#14532D}
+
+/* AHI TABLE */
+.ahi-wrap{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px;
+  margin-bottom:14px;
+}
+.ahi-wrap h4{
+  font-size:12px;font-weight:700;
+  color:var(--text);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:6px;
+  display:flex;align-items:center;gap:6px;
+}
+.ahi-intro{
+  font-size:12px;font-weight:400;
+  color:var(--text-muted);line-height:1.5;
+  margin-bottom:12px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+}
+.ahi-row{
+  display:flex;align-items:center;gap:10px;
+  border-radius:8px;
+  padding:10px 12px;
+  margin-bottom:6px;
+  transition:transform .3s;
+}
+.ahi-row:last-child{margin-bottom:0}
+.ahi-dot{
+  width:10px;height:10px;min-width:10px;
+  border-radius:50%;
+}
+.ahi-row-name{flex:1;font-size:13px;font-weight:700}
+.ahi-row-val{font-size:12px;font-weight:600;white-space:nowrap}
+
+.ahi-row.normal{background:#DCFCE7}
+.ahi-row.normal .ahi-dot{background:#16A34A}
+.ahi-row.normal .ahi-row-name{color:#14532D}
+.ahi-row.normal .ahi-row-val{color:#15803D}
+
+.ahi-row.mild{background:#FEF9C3}
+.ahi-row.mild .ahi-dot{background:#CA8A04}
+.ahi-row.mild .ahi-row-name{color:#713F12}
+.ahi-row.mild .ahi-row-val{color:#854D0E}
+
+.ahi-row.moderate{background:#FFEDD5}
+.ahi-row.moderate .ahi-dot{background:#EA580C}
+.ahi-row.moderate .ahi-row-name{color:#7C2D12}
+.ahi-row.moderate .ahi-row-val{color:#9A3412}
+
+.ahi-row.severe{background:#FEE2E2}
+.ahi-row.severe .ahi-dot{background:#DC2626}
+.ahi-row.severe .ahi-row-name{color:#7F1D1D}
+.ahi-row.severe .ahi-row-val{color:#991B1B}
+
+.ahi-row.active-ahi{
+  animation:ahiPulse 1.8s ease-in-out infinite;
+  outline:2px solid currentColor;
+}
+@keyframes ahiPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.025)}
+}
+
+/* EXPERT ADVICE */
+.expert-card{
+  background:var(--primary-xlight);
+  border:1px solid #A5D8E0;
+  border-radius:var(--r);
+  padding:18px;
+  margin-bottom:14px;
+  font-size:13px;line-height:1.7;
+  color:#0A5F6B;
+}
+.expert-card h4{
+  font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.5px;
+  color:var(--primary);margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+
+/* CTA AREA */
+.cta-area{
+  display:flex;flex-direction:column;gap:10px;
+  margin-bottom:16px;
+}
+.cta-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:16px 20px;
+  border-radius:var(--rs);
+  font-family:'Montserrat',sans-serif;
+  font-size:14px;font-weight:700;
+  cursor:pointer;border:none;
+  text-decoration:none;
+  letter-spacing:.3px;
+  transition:opacity .15s,transform .1s;
+  line-height:1.2;
+}
+.cta-btn:active{transform:scale(.985);opacity:.9}
+.cta-primary-red{background:var(--red);color:#fff}
+.cta-primary-yellow{background:var(--yellow-mid);color:#fff}
+.cta-primary-green{background:var(--green);color:#fff}
+.cta-secondary{
+  background:#fff;
+  border:1.5px solid var(--border-mid);
+  color:var(--text);
+}
+
+/* FOOTER */
+.site-footer{
+  background:#fff;
+  border-top:1px solid var(--border);
+  padding:20px;
+  text-align:center;
+}
+.site-footer .co-name{
+  font-size:12px;font-weight:800;
+  color:var(--text);margin-bottom:8px;
+}
+.site-footer p{
+  font-size:11px;color:var(--text-muted);
+  line-height:1.7;font-weight:400;
+}
+.site-footer a{color:var(--primary);text-decoration:none}
+
+/* LOADING SPINNER */
+.spinner-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(255,255,255,.85);
+  z-index:999;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;
+}
+.spinner-overlay.show{display:flex}
+.spinner{
+  width:40px;height:40px;
+  border:3px solid var(--border);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner-text{
+  font-size:13px;font-weight:600;
+  color:var(--text-muted);
+}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:24px;left:50%;
+  transform:translateX(-50%) translateY(80px);
+  background:#1E293B;color:#fff;
+  padding:11px 20px;
+  border-radius:99px;
+  font-size:13px;font-weight:600;
+  white-space:nowrap;
+  transition:transform .3s ease;
+  z-index:1000;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+
+<div class="quiz-root" id="quizRoot">
+
+  <!-- SPINNER -->
+  <div class="spinner-overlay" id="spinnerOverlay">
+    <div class="spinner"></div>
+    <span class="spinner-text">Đang phân tích kết quả...</span>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-shell" id="progressShell">
+    <div class="progress-meta">
+      <span class="progress-step-text" id="progressStepText">Câu 1 / 8</span>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ START SCREEN ══════════════ -->
+  <div class="screen active" id="screenStart">
+    <div class="start-hero">
+      <div class="hero-icon-wrap">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4C10.27 4 4 10.27 4 18s6.27 14 14 14 14-6.27 14-14S25.73 4 18 4z" fill="rgba(255,255,255,.25)"/>
+          <path d="M9 16c0-4.97 4.03-9 9-9s9 4.03 9 9v6a2 2 0 01-2 2H11a2 2 0 01-2-2v-6z" fill="rgba(255,255,255,.9)"/>
+          <path d="M14 16q1-2 4-2t4 2" stroke="#0A6675" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="14.5" cy="19.5" r="1" fill="#0A6675"/>
+          <circle cx="21.5" cy="19.5" r="1" fill="#0A6675"/>
+          <path d="M15 22c.6.8 1.4 1.2 3 1.2s2.4-.4 3-1.2" stroke="#0A6675" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h1>BẠN CÓ ĐANG NGỦ NGÁY TO? TEST NHANH NGUY CƠ NGƯNG THỞ KHI NGỦ (OSA)!</h1>
+      <p>Tiếng ngáy hằng đêm có thể là "tiếng kêu cứu" của cơ thể do thiếu oxy não. Chỉ mất 1 phút với 8 câu hỏi chuẩn y khoa (dựa trên thang điểm STOP-BANG) để tầm soát sức khỏe giấc ngủ của bạn và gia đình.</p>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-badge"><strong>8</strong>Câu hỏi chuẩn y khoa</div>
+      <div class="trust-badge"><strong>1 phút</strong>Hoàn thành nhanh</div>
+      <div class="trust-badge"><strong>STOP-BANG</strong>Thang điểm quốc tế</div>
+      <div class="trust-badge"><strong>Miễn phí</strong>Hoàn toàn 0 đồng</div>
+    </div>
+
+    <button class="btn btn-teal" id="btnStart" onclick="startTest()">
+      🚀 BẮT ĐẦU KIỂM TRA NGAY
+    </button>
+
+    <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:12px;font-weight:500;line-height:1.5;">
+      ⚠️ Bài kiểm tra này chỉ mang tính tầm soát ban đầu, không thay thế chẩn đoán y khoa.
+    </p>
+  </div>
+
+  <!-- ══════════════ QUESTION SCREEN ══════════════ -->
+  <div class="screen" id="screenQuestion">
+    <div class="q-label" id="qLabel">Câu 1 / 8 · Mức độ ngáy</div>
+    <div class="q-text" id="qText">Câu hỏi sẽ hiển thị ở đây.</div>
+    <div class="q-note" id="qNote"></div>
+    <div class="options" id="optionsContainer"></div>
+    <button class="back-btn" id="btnBack" onclick="goBack()">
+      ← Quay lại câu trước
+    </button>
+  </div>
+
+  <!-- ══════════════ FORM SCREEN ══════════════ -->
+  <div class="screen" id="screenForm">
+    <div class="form-hero">
+      <span class="fh-icon">📋</span>
+      <h2>Kết quả của bạn đã sẵn sàng!</h2>
+      <p>Vui lòng để lại thông tin để hệ thống gửi kết quả chi tiết kèm tư vấn phác đồ điều trị miễn phí từ Bác sĩ chuyên khoa hô hấp.</p>
+    </div>
+
+    <div class="form-card">
+      <div class="fld" id="fldName">
+        <label class="fld-lbl" for="inputName">Họ và tên *</label>
+        <input type="text" id="inputName" placeholder="Nguyễn Văn A" autocomplete="name">
+        <span class="err-msg">Vui lòng nhập họ tên của bạn</span>
+      </div>
+      <div class="fld" id="fldPhone">
+        <label class="fld-lbl" for="inputPhone">Số điện thoại *</label>
+        <input type="tel" id="inputPhone" placeholder="0901 234 567" autocomplete="tel">
+        <span class="err-msg">Vui lòng nhập số điện thoại hợp lệ (10 số)</span>
+      </div>
+
+      <div class="check-row">
+        <input type="checkbox" id="checkRegister">
+        <label for="checkRegister">🏠 Tôi muốn đăng ký đo đa ký hô hấp tại nhà (Tầm soát chuyên sâu)</label>
+      </div>
+
+      <button class="btn btn-teal" onclick="submitForm()">
+        XEM KẾT QUẢ ĐÁNH GIÁ →
+      </button>
+
+      <p class="privacy-note">🔒 Thông tin của bạn được bảo mật tuyệt đối và chỉ dùng để tư vấn sức khỏe.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════ RESULT SCREEN ══════════════ -->
+  <div class="screen" id="screenResult">
+
+    <!-- Dynamic banner -->
+    <div class="result-banner" id="resultBanner">
+      <span class="result-icon" id="resultIcon"></span>
+      <div class="result-title" id="resultTitle"></div>
+      <span class="score-chip" id="scoreChip"></span>
+    </div>
+
+    <!-- Body text -->
+    <div class="result-body" id="resultBody"></div>
+
+    <!-- GAUGE CHART -->
+    <div class="gauge-wrap">
+      <h4>🎯 Thang đo nguy cơ của bạn</h4>
+      <div class="gauge-svg-wrap">
+        <svg id="gaugeSvg" viewBox="0 0 260 145" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block">
+          <!-- Background arcs (thick) -->
+          <!-- Green zone: 0-5pts = 0° to 56.25° of 180° arc -->
+          <!-- Using stroke-dasharray technique on full semicircle -->
+          <path d="M 20 130 A 110 110 0 0 1 240 130" fill="none" stroke="#DCFCE7" stroke-width="20" stroke-linecap="butt"/>
+          <!-- Color segments via overlay paths -->
+          <path id="arcGreen" d="M 20 130 A 110 110 0 0 1 240 130" fill="none" stroke="#16A34A" stroke-width="20" stroke-linecap="butt"
+            stroke-dasharray="0 346"
+            style="transition:stroke-dasharray 0s"/>
+          <!-- Colored zones as static background -->
+          <!-- We'll draw the gauge as 3 colored arcs -->
+          <!-- Total arc length ≈ π*110 = 345.6 ≈ 346 -->
+          <!-- Green: 5/16 * 346 ≈ 108 -->
+          <!-- Yellow: 5/16 * 346 ≈ 108 -->
+          <!-- Red: 6/16 * 346 ≈ 130 -->
+          <path d="M 20 130 A 110 110 0 0 1 240 130" fill="none" stroke="#DCFCE7" stroke-width="22" stroke-linecap="butt"
+            stroke-dasharray="346 346" stroke-dashoffset="0"/>
+          <!-- Zone colors -->
+          <path d="M 20 130 A 110 110 0 0 1 240 130" fill="none" stroke="#16A34A" stroke-width="22"
+            stroke-dasharray="108 238" stroke-dashoffset="0"/>
+          <path d="M 20 130 A 110 110 0 0 1 240 130" fill="none" stroke="#CA8A04" stroke-width="22"
+            stroke-dasharray="108 238" stroke-dashoffset="-108"/>
+          <path d="M 20 130 A 110 110 0 0 1 240 130" fill="none" stroke="#DC2626" stroke-width="22"
+            stroke-dasharray="130 216" stroke-dashoffset="-216"/>
+
+          <!-- Zone labels -->
+          <text x="32" y="100" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="#15803D" text-anchor="middle">THẤP</text>
+          <text x="130" y="28" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="#92400E" text-anchor="middle">TRUNG BÌNH</text>
+          <text x="228" y="100" font-family="Montserrat,sans-serif" font-size="9" font-weight="700" fill="#991B1B" text-anchor="middle">CAO</text>
+
+          <!-- Score range labels -->
+          <text x="22" y="143" font-family="Montserrat,sans-serif" font-size="8" fill="#64748B" text-anchor="middle">0</text>
+          <text x="130" y="143" font-family="Montserrat,sans-serif" font-size="8" fill="#64748B" text-anchor="middle">8</text>
+          <text x="238" y="143" font-family="Montserrat,sans-serif" font-size="8" fill="#64748B" text-anchor="middle">16</text>
+
+          <!-- Needle -->
+          <g id="gaugeNeedle" style="transform-origin:130px 130px;transform:rotate(-90deg);transition:transform 1.2s cubic-bezier(.34,1.56,.64,1)">
+            <line x1="130" y1="130" x2="130" y2="32" stroke="#1E293B" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="130" cy="130" r="8" fill="#1E293B"/>
+            <circle cx="130" cy="130" r="4" fill="#fff"/>
+          </g>
+        </svg>
+      </div>
+      <div class="gauge-score-display" id="gaugeScoreDisplay"></div>
+      <div class="gauge-risk-label" id="gaugeRiskLabel"></div>
+    </div>
+
+    <!-- Expert advice -->
+    <div class="expert-card" id="expertCard">
+      <h4>💡 Lời khuyên từ chuyên gia</h4>
+      <div id="expertText"></div>
+    </div>
+
+    <!-- AHI Table -->
+    <div class="ahi-wrap">
+      <h4>💡 Chỉ số AHI là gì?</h4>
+      <p class="ahi-intro">AHI (Apnea-Hypopnea Index) là số lần ngưng thở hoặc giảm thở trong 1 giờ ngủ. Chỉ số này được xác định chính xác qua <strong>Đo đa ký hô hấp</strong> — tiêu chuẩn vàng y khoa.</p>
+      <div class="ahi-row normal" id="ahiNormal">
+        <div class="ahi-dot"></div>
+        <div class="ahi-row-name">Bình thường</div>
+        <div class="ahi-row-val">AHI &lt; 5 lần/giờ</div>
+      </div>
+      <div class="ahi-row mild" id="ahiMild">
+        <div class="ahi-dot"></div>
+        <div class="ahi-row-name">Nhẹ (Mild)</div>
+        <div class="ahi-row-val">5 ≤ AHI &lt; 15</div>
+      </div>
+      <div class="ahi-row moderate" id="ahiModerate">
+        <div class="ahi-dot"></div>
+        <div class="ahi-row-name">Trung bình (Moderate)</div>
+        <div class="ahi-row-val">15 ≤ AHI ≤ 30</div>
+      </div>
+      <div class="ahi-row severe" id="ahiSevere">
+        <div class="ahi-dot"></div>
+        <div class="ahi-row-name">Nặng (Severe) ⚠️</div>
+        <div class="ahi-row-val">AHI &gt; 30 lần/giờ</div>
+      </div>
+    </div>
+
+    <!-- CTAs -->
+    <div class="cta-area" id="ctaArea"></div>
+
+    <!-- Footer -->
+    <div class="site-footer">
+      <div class="co-name">CÔNG TY CỔ PHẦN CODY HEALTH</div>
+      <p>
+        📍 Phòng 6.28, tòa nhà Everich Infinity, 290 An Dương Vương, P.Chợ Quán (Q.5), TP.HCM<br>
+        🌐 <a href="https://giacnguviet.com.vn" target="_blank">giacnguviet.com.vn</a> &nbsp;|&nbsp;
+        ☎ <a href="tel:0903289387">090 328 93 87</a> &nbsp;|&nbsp;
+        📧 <a href="mailto:hotro@giacnguviet.com.vn">hotro@giacnguviet.com.vn</a>
+      </p>
+    </div>
+  </div>
+
+</div><!-- end quiz-root -->
+
+<script>
+// ═══════════════════════════════════════════════
+// CONFIG — Dán URL Make.com webhook vào đây
+// ═══════════════════════════════════════════════
+// Bước 1: Tạo scenario trên make.com
+// Bước 2: Thêm trigger "Webhooks > Custom Webhook"
+// Bước 3: Copy URL → dán vào MAKE_WEBHOOK_URL bên dưới
+var MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/cmhl44xdx35najuj6m8w1iu87ndfbigt';
+
+// Zalo OA Access Token (lấy từ developers.zalo.me)
+// Để trống nếu chưa cấu hình — hệ thống vẫn đẩy Google Sheets bình thường
+var ZALO_ACCESS_TOKEN = '';
+var ZALO_ADMIN_USER_ID = ''; // Zalo user_id của nhân viên nhận thông báo
+
+// ═══════════════════════════════════════════════
+// QUESTIONS DATA
+// ═══════════════════════════════════════════════
+var QUESTIONS = [
+  {
+    label: 'Câu 1 · Mức độ ngáy',
+    text: 'Bạn có thường xuyên ngáy khi ngủ không, và âm lượng tiếng ngáy như thế nào?',
+    note: null,
+    options: [
+      { letter: 'A', text: 'Không ngáy hoặc hiếm khi ngáy.', score: 0 },
+      { letter: 'B', text: 'Thỉnh thoảng ngáy, tiếng ngáy nhỏ hoặc vừa phải.', score: 1 },
+      { letter: 'C', text: 'Ngáy rất thường xuyên, tiếng ngáy rất to (người ở phòng bên cạnh cũng nghe thấy).', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 2 · Mức độ mệt mỏi ban ngày',
+    text: 'Bạn có cảm thấy mệt mỏi, uể oải hay buồn ngủ quá mức vào ban ngày không (dù đêm qua đã ngủ đủ giờ)?',
+    note: null,
+    options: [
+      { letter: 'A', text: 'Luôn tỉnh táo, rất hiếm khi buồn ngủ ban ngày.', score: 0 },
+      { letter: 'B', text: 'Thỉnh thoảng thấy uể oải, mất tập trung vào giữa ngày.', score: 1 },
+      { letter: 'C', text: 'Rất hay buồn ngủ, mệt mỏi rã rời ảnh hưởng nghiêm trọng đến công việc / lái xe.', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 3 · Nhịp thở quan sát được',
+    text: 'Người nhà hoặc người ngủ cùng có bao giờ nhận thấy bạn có biểu hiện bất thường về nhịp thở lúc ngủ chưa?',
+    note: null,
+    options: [
+      { letter: 'A', text: 'Chưa từng có ai thấy tôi bị ngừng thở hay sặc nghẹn lúc ngủ.', score: 0 },
+      { letter: 'B', text: 'Thỉnh thoảng có nhịp thở gấp, trằn trọc hoặc ngáy ngắt quãng.', score: 1 },
+      { letter: 'C', text: 'Đã có người tận mắt thấy tôi bị ngừng thở, sặc nghẹn hoặc thở hổn hển lúc ngủ.', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 4 · Tình trạng huyết áp',
+    text: 'Tình trạng huyết áp hiện tại của bạn như thế nào?',
+    note: null,
+    options: [
+      { letter: 'A', text: 'Huyết áp hoàn toàn bình thường.', score: 0 },
+      { letter: 'B', text: 'Huyết áp ở mức ranh giới (tiền cao huyết áp) hoặc thỉnh thoảng có tăng cao nhưng chưa dùng thuốc.', score: 1 },
+      { letter: 'C', text: 'Đang bị Cao huyết áp và/hoặc đang phải uống thuốc điều trị hàng ngày.', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 5 · Chỉ số khối cơ thể (BMI)',
+    text: 'Tình trạng cân nặng hiện tại của bạn đang ở mức nào?',
+    note: 'Gợi ý tính BMI: Cân nặng (kg) ÷ [Chiều cao (m) × Chiều cao (m)]',
+    options: [
+      { letter: 'A', text: 'Cân đối, bình thường (BMI dưới 23 — Chuẩn người Á Đông).', score: 0 },
+      { letter: 'B', text: 'Thừa cân nhẹ (BMI từ 23 đến 29.9).', score: 1 },
+      { letter: 'C', text: 'Béo phì (BMI từ 30 trở lên).', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 6 · Độ tuổi',
+    text: 'Bạn đang ở nhóm độ tuổi nào?',
+    note: null,
+    options: [
+      { letter: 'A', text: 'Dưới 40 tuổi.', score: 0 },
+      { letter: 'B', text: 'Từ 40 – 50 tuổi.', score: 1 },
+      { letter: 'C', text: 'Trên 50 tuổi (Nhóm có nguy cơ thoái hóa cơ vùng hầu họng cao).', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 7 · Kích thước vòng cổ',
+    text: 'Vòng cổ của bạn có lớn không? (Mỡ thừa vùng cổ chèn ép đường thở)',
+    note: '📏 Cách đo: Dùng thước dây, đo vòng quanh cổ tại nếp gấp cổ áo thông thường. Ngưỡng nguy cơ: Nam > 43 cm · Nữ > 40 cm.',
+    options: [
+      { letter: 'A', text: 'Cổ thon gọn, bình thường.', score: 0 },
+      { letter: 'B', text: 'Cổ hơi to, có nọng cằm, thỉnh thoảng mặc áo cài nút cổ thấy chật.', score: 1 },
+      { letter: 'C', text: 'Vòng cổ rất lớn (Chu vi > 43 cm đối với nam, hoặc > 40 cm đối với nữ).', score: 2 }
+    ]
+  },
+  {
+    label: 'Câu 8 · Giới tính & Nội tiết tố',
+    text: 'Giới tính của bạn là gì? (Y khoa chứng minh nội tiết tố ảnh hưởng rõ rệt đến nguy cơ OSA)',
+    note: null,
+    options: [
+      { letter: 'A', text: 'Nữ giới (Chưa mãn kinh).', score: 0 },
+      { letter: 'B', text: 'Nữ giới (Đã mãn kinh).', score: 1 },
+      { letter: 'C', text: 'Nam giới.', score: 2 }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════
+// RESULTS DATA
+// ═══════════════════════════════════════════════
+var RESULTS = {
+  high: {
+    minScore: 11,
+    color: 'red',
+    icon: '🚨',
+    title: 'BÁO ĐỘNG ĐỎ! NGUY CƠ BẠN MẮC HỘI CHỨNG NGƯNG THỞ KHI NGỦ RẤT CAO.',
+    chipLabel: 'Nguy cơ rất cao',
+    body: 'Các dấu hiệu cho thấy đường thở của bạn đang bị <strong>tắc nghẽn nghiêm trọng</strong> khi ngủ, dẫn đến thiếu hụt oxy lên não. Bạn đang đứng trước nguy cơ rất cao gặp phải các biến chứng nguy hiểm như: đột quỵ, nhồi máu cơ tim, và huyết áp cao khó kiểm soát.',
+    expert: 'Đừng chần chừ! Đây là tình trạng y khoa khẩn cấp. Bạn cần thực hiện <strong>"Tiêu chuẩn vàng"</strong> là Đo đa ký hô hấp ngay lập tức để xác định chính xác Chỉ số ngưng giảm thở (AHI). Các bác sĩ sẽ dựa vào chỉ số thực tế của bạn để chỉ định can thiệp kịp thời bằng <strong>máy trợ thở CPAP/BiPAP của hãng ResMed</strong>.',
+    activeAhi: 'severe',
+    ctas: [
+      { label: 'ĐẶT LỊCH ĐO ĐA KÝ HÔ HẤP TẠI NHÀ', icon: '📞', cls: 'cta-primary-red', href: 'tel:0903289387' },
+      { label: 'TÌM HIỂU MÁY TRỢ THỞ RESMED', icon: '🔍', cls: 'cta-secondary', href: 'https://giacnguviet.com.vn' }
+    ]
+  },
+  medium: {
+    minScore: 6,
+    color: 'yellow',
+    icon: '⚠️',
+    title: 'LƯU Ý! BẠN ĐANG Ở NGƯỠNG CẢNH BÁO. NGUY CƠ TRUNG BÌNH MẮC HỘI CHỨNG NGƯNG THỞ KHI NGỦ.',
+    chipLabel: 'Nguy cơ trung bình',
+    body: 'Bạn đã bắt đầu có những biểu hiện của sự tắc nghẽn đường thở (ngáy to, mệt mỏi ban ngày). Dù chưa ở mức độ quá nguy hiểm, nhưng giấc ngủ kém chất lượng đang âm thầm làm <strong>suy giảm sức khỏe, hiệu suất làm việc và hệ miễn dịch</strong> của bạn.',
+    expert: 'Hãy kết nối ngay với bác sĩ chuyên khoa hô hấp để nhận tư vấn miễn phí. Để biết chính xác tình trạng, bạn nên <strong>đo đa ký hô hấp tại nhà</strong> nhằm kiểm tra Chỉ số AHI của bản thân và ngăn chặn bệnh tiến triển nặng hơn gây ảnh hưởng tim mạch.',
+    activeAhi: 'mild',
+    ctas: [
+      { label: 'NHẬN TƯ VẤN TỪ BÁC SĨ CHUYÊN KHOA', icon: '💬', cls: 'cta-primary-yellow', href: 'tel:0903289387' }
+    ]
+  },
+  low: {
+    minScore: 0,
+    color: 'green',
+    icon: '✅',
+    title: 'TIN VUI! BẠN CÓ NGUY CƠ RẤT THẤP MẮC HỘI CHỨNG NGƯNG THỞ KHI NGỦ (OSA).',
+    chipLabel: 'Nguy cơ thấp',
+    body: 'Đường thở của bạn hoạt động ổn định trong đêm. Tuy nhiên, nếu vẫn thường xuyên thấy mệt mỏi hoặc bị ngáy, nguyên nhân có thể đến từ căng thẳng hoặc các bệnh lý mũi họng thông thường.',
+    expert: 'Hãy duy trì lối sống lành mạnh, ăn uống khoa học và kiểm soát cân nặng tốt. Nếu bạn muốn <strong>chắc chắn 100%</strong> về chất lượng giấc ngủ, cách duy nhất là đo đa ký hô hấp để xem Chỉ số AHI của mình có thực sự nằm ở mức an toàn hay không.',
+    activeAhi: 'normal',
+    ctas: [
+      { label: 'ĐỌC THÊM KIẾN THỨC CHĂM SÓC GIẤC NGỦ', icon: '📖', cls: 'cta-primary-green', href: 'https://giacnguviet.com.vn' }
+    ]
+  }
+};
+
+// ═══════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════
+var state = {
+  currentQ: 0,
+  scores: new Array(8).fill(null),
+  totalScore: 0,
+  userName: '',
+  userPhone: '',
+  userRegister: false
+};
+
+// ═══════════════════════════════════════════════
+// GTM DataLayer helper
+// ═══════════════════════════════════════════════
+function pushLayer(obj) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push(obj);
+}
+
+// ═══════════════════════════════════════════════
+// SCREEN NAVIGATION
+// ═══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(function(s) {
+    s.classList.remove('active');
+  });
+  var el = document.getElementById(id);
+  if (el) {
+    // Force reflow to restart animation
+    el.classList.remove('active');
+    void el.offsetWidth;
+    el.classList.add('active');
+  }
+}
+
+function updateProgress(qIndex) {
+  var shell = document.getElementById('progressShell');
+  var fill = document.getElementById('progressFill');
+  var stepText = document.getElementById('progressStepText');
+  var pct = document.getElementById('progressPct');
+  var pctVal = Math.round((qIndex / 8) * 100);
+  shell.classList.add('visible');
+  fill.style.width = pctVal + '%';
+  stepText.textContent = 'Câu ' + (qIndex + 1) + ' / 8';
+  pct.textContent = pctVal + '%';
+}
+
+function hideProgress() {
+  document.getElementById('progressShell').classList.remove('visible');
+}
+
+// ═══════════════════════════════════════════════
+// START TEST
+// ═══════════════════════════════════════════════
+function startTest() {
+  pushLayer({ event: 'view_test' });
+  state.scores = new Array(8).fill(null);
+  state.currentQ = 0;
+  showQuestion(0);
+}
+
+// ═══════════════════════════════════════════════
+// SHOW QUESTION
+// ═══════════════════════════════════════════════
+function showQuestion(index) {
+  var q = QUESTIONS[index];
+  state.currentQ = index;
+  updateProgress(index);
+  showScreen('screenQuestion');
+
+  document.getElementById('qLabel').textContent = q.label;
+  document.getElementById('qText').textContent = q.text;
+
+  var noteEl = document.getElementById('qNote');
+  if (q.note) {
+    noteEl.innerHTML = q.note;
+    noteEl.classList.add('show');
+  } else {
+    noteEl.classList.remove('show');
+  }
+
+  // Back button visibility
+  document.getElementById('btnBack').style.display = index === 0 ? 'none' : 'flex';
+
+  // Render options
+  var container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  q.options.forEach(function(opt, i) {
+    var btn = document.createElement('button');
+    btn.className = 'opt' + (state.scores[index] === opt.score && state.scores[index] !== null ? ' selected' : '');
+    btn.innerHTML =
+      '<span class="opt-marker">' + opt.letter + '</span>' +
+      '<span>' + opt.text + '</span>';
+    btn.addEventListener('click', function() {
+      selectAnswer(index, opt.score, btn);
+    });
+    container.appendChild(btn);
+  });
+
+  // GTM: 50% milestone
+  if (index === 3) {
+    pushLayer({ event: 'test_progress', question: 4, progress_pct: 50 });
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SELECT ANSWER
+// ═══════════════════════════════════════════════
+function selectAnswer(qIndex, score, btnEl) {
+  // Highlight
+  document.querySelectorAll('#optionsContainer .opt').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  btnEl.classList.add('selected');
+  state.scores[qIndex] = score;
+
+  // Auto-advance after short delay
+  setTimeout(function() {
+    if (qIndex < 7) {
+      showQuestion(qIndex + 1);
+    } else {
+      // All done — show form
+      showFormScreen();
+    }
+  }, 260);
+}
+
+// ═══════════════════════════════════════════════
+// GO BACK
+// ═══════════════════════════════════════════════
+function goBack() {
+  if (state.currentQ > 0) {
+    state.scores[state.currentQ] = null; // clear current answer
+    showQuestion(state.currentQ - 1);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// FORM SCREEN
+// ═══════════════════════════════════════════════
+function showFormScreen() {
+  hideProgress();
+  showScreen('screenForm');
+  // Pre-fill if returning
+  if (state.userName) document.getElementById('inputName').value = state.userName;
+  if (state.userPhone) document.getElementById('inputPhone').value = state.userPhone;
+}
+
+function submitForm() {
+  var nameEl = document.getElementById('inputName');
+  var phoneEl = document.getElementById('inputPhone');
+  var fldName = document.getElementById('fldName');
+  var fldPhone = document.getElementById('fldPhone');
+  var name = nameEl.value.trim();
+  var phone = phoneEl.value.trim().replace(/\s/g, '');
+
+  // Validation
+  var valid = true;
+  if (!name || name.length < 2) {
+    fldName.classList.add('error'); valid = false;
+  } else {
+    fldName.classList.remove('error');
+  }
+
+  var phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})\b/;
+  if (!phoneRegex.test(phone)) {
+    fldPhone.classList.add('error'); valid = false;
+  } else {
+    fldPhone.classList.remove('error');
+  }
+
+  if (!valid) return;
+
+  state.userName = name;
+  state.userPhone = phone;
+  state.userRegister = document.getElementById('checkRegister').checked;
+
+  // Calculate total
+  state.totalScore = state.scores.reduce(function(a, b) {
+    return a + (b !== null ? b : 0);
+  }, 0);
+
+  var riskLevel = getRiskLevel(state.totalScore);
+
+  // GTM: submit_form
+  pushLayer({
+    event: 'submit_form',
+    name: name,
+    phone: phone,
+    total_score: state.totalScore,
+    risk_level: riskLevel
+  });
+
+  // Push to webhook
+  sendToWebhook(name, phone, state.userRegister, state.totalScore, riskLevel);
+
+  // Show result
+  showResultScreen();
+}
+
+// ═══════════════════════════════════════════════
+// WEBHOOK → Make.com → Google Sheets + Zalo OA
+// ═══════════════════════════════════════════════
+function sendToWebhook(name, phone, register, score, risk) {
+  // Payload chuẩn — Make.com sẽ map các field này
+  var payload = {
+    // === THÔNG TIN KHÁCH HÀNG ===
+    timestamp: new Date().toLocaleString('vi-VN', {timeZone:'Asia/Ho_Chi_Minh'}),
+    ho_ten: name,
+    so_dien_thoai: phone,
+    dang_ky_do_da_ky: register ? 'CÓ — Cần liên hệ ngay' : 'Không',
+
+    // === KẾT QUẢ KHẢO SÁT ===
+    tong_diem: score,
+    tong_diem_toi_da: 16,
+    muc_nguy_co: risk,                         // "Cao" | "Trung bình" | "Thấp"
+    phan_loai_mau: risk === 'Cao' ? '🔴 ĐỎ' :
+                   risk === 'Trung bình' ? '🟡 VÀNG' : '🟢 XANH',
+
+    // === CHI TIẾT TỪNG CÂU (cho phân tích sâu) ===
+    diem_cau_1_ngay:        state.scores[0],
+    diem_cau_2_met_moi:     state.scores[1],
+    diem_cau_3_ngung_tho:   state.scores[2],
+    diem_cau_4_huyet_ap:    state.scores[3],
+    diem_cau_5_bmi:         state.scores[4],
+    diem_cau_6_tuoi:        state.scores[5],
+    diem_cau_7_vong_co:     state.scores[6],
+    diem_cau_8_gioi_tinh:   state.scores[7],
+
+    // === METADATA ===
+    nguon: 'OSA Quiz — giacnguviet.com.vn',
+    utm_source: getURLParam('utm_source') || '',
+    utm_medium: getURLParam('utm_medium') || '',
+    utm_campaign: getURLParam('utm_campaign') || ''
+  };
+
+  // Dev mode: chưa cấu hình → log console
+  if (MAKE_WEBHOOK_URL.indexOf('YOUR_WEBHOOK_ID') !== -1) {
+    console.log('[OSA Quiz] ⚙️ Chưa cấu hình MAKE_WEBHOOK_URL. Payload mẫu:', JSON.stringify(payload, null, 2));
+    return;
+  }
+
+  // POST đến Make.com (1 lần gọi, Make tự fan-out ra Sheets + Zalo)
+  fetch(MAKE_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(res) {
+    if (res.ok) {
+      console.log('[OSA Quiz] ✅ Lead đã đẩy thành công về Make.com');
+    } else {
+      throw new Error('HTTP ' + res.status);
+    }
+  })
+  .catch(function(err) {
+    // Lỗi mạng: thử lại 1 lần sau 3 giây
+    console.warn('[OSA Quiz] ⚠️ Lần 1 thất bại, thử lại...', err);
+    setTimeout(function() {
+      fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(function(e) {
+        console.error('[OSA Quiz] ❌ Không thể gửi data sau 2 lần thử:', e);
+      });
+    }, 3000);
+  });
+}
+
+// Helper: đọc UTM params từ URL
+function getURLParam(key) {
+  try {
+    return new URLSearchParams(window.location.search).get(key) || '';
+  } catch(e) { return ''; }
+}
+
+// ═══════════════════════════════════════════════
+// RESULT SCREEN
+// ═══════════════════════════════════════════════
+function getRiskLevel(score) {
+  if (score >= 11) return 'Cao';
+  if (score >= 6) return 'Trung bình';
+  return 'Thấp';
+}
+
+function getResultData(score) {
+  if (score >= 11) return RESULTS.high;
+  if (score >= 6) return RESULTS.medium;
+  return RESULTS.low;
+}
+
+function showResultScreen() {
+  var score = state.totalScore;
+  var data = getResultData(score);
+  var color = data.color;
+
+  // Banner
+  var banner = document.getElementById('resultBanner');
+  banner.className = 'result-banner ' + color;
+  document.getElementById('resultIcon').textContent = data.icon;
+  var titleEl = document.getElementById('resultTitle');
+  titleEl.className = 'result-title ' + color;
+  titleEl.textContent = data.title;
+
+  var chip = document.getElementById('scoreChip');
+  chip.className = 'score-chip ' + color;
+  chip.textContent = 'Điểm của bạn: ' + score + '/16 — ' + data.chipLabel;
+
+  // Body
+  document.getElementById('resultBody').innerHTML = data.body;
+
+  // Expert
+  document.getElementById('expertText').innerHTML = data.expert;
+
+  // Gauge score display
+  var gaugeScore = document.getElementById('gaugeScoreDisplay');
+  gaugeScore.className = 'gauge-score-display ' + color;
+  gaugeScore.textContent = score + ' / 16 điểm';
+
+  var riskLabel = document.getElementById('gaugeRiskLabel');
+  riskLabel.className = 'gauge-risk-label ' + color;
+  riskLabel.textContent = data.chipLabel;
+
+  // CTAs
+  var ctaArea = document.getElementById('ctaArea');
+  ctaArea.innerHTML = '';
+  data.ctas.forEach(function(cta) {
+    var a = document.createElement('a');
+    a.className = 'cta-btn ' + cta.cls;
+    a.href = cta.href;
+    if (cta.href.startsWith('http')) a.target = '_blank';
+    a.innerHTML = cta.icon + ' ' + cta.label;
+    ctaArea.appendChild(a);
+  });
+
+  // Highlight AHI row
+  ['ahiNormal','ahiMild','ahiModerate','ahiSevere'].forEach(function(id) {
+    document.getElementById(id).classList.remove('active-ahi');
+  });
+  var ahiMap = {
+    normal: 'ahiNormal',
+    mild: 'ahiMild',
+    moderate: 'ahiModerate',
+    severe: 'ahiSevere'
+  };
+  if (ahiMap[data.activeAhi]) {
+    document.getElementById(ahiMap[data.activeAhi]).classList.add('active-ahi');
+  }
+
+  showScreen('screenResult');
+
+  // Animate needle after brief delay (let screen render first)
+  setTimeout(function() {
+    var needle = document.getElementById('gaugeNeedle');
+    var angle = -90 + (score / 16) * 180;
+    needle.style.transform = 'rotate(' + angle + 'deg)';
+  }, 350);
+
+  // GTM: view_result
+  pushLayer({
+    event: 'view_result',
+    risk_level: getRiskLevel(score),
+    total_score: score
+  });
+}
+
+// ═══════════════════════════════════════════════
+// TOAST helper
+// ═══════════════════════════════════════════════
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2800);
+}
+
+// ═══════════════════════════════════════════════
+// Init: clear DataLayer
+// ═══════════════════════════════════════════════
+window.dataLayer = window.dataLayer || [];
+</script>
+</body>
+</html>
